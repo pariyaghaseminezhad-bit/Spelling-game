@@ -1,0 +1,313 @@
+
+<div id="space-spelling" dir="rtl">
+  <div class="stars"></div>
+  <div class="planet planet-one"></div>
+  <div class="planet planet-two"></div>
+
+  <header class="hud">
+    <div class="hud-box">🚀 مرحله <b id="level">۱</b> از ۲۲</div>
+    <div class="hud-box">⭐ امتیاز <b id="score">۰</b></div>
+  </header>
+
+  <main class="game-panel">
+    <div class="astronaut">👨‍🚀</div>
+    <div class="eyebrow">MISSION: SPELLING</div>
+    <h1>شکارچی املای درست</h1>
+    <p class="subtitle">برای عبور از این سیاره، املای درست را پیدا کن!</p>
+
+    <div class="mission-card">
+      <div class="target-icon">✦</div>
+      <p id="question">کدام گزینه درست نوشته شده است؟</p>
+      <div class="answers" id="answers"></div>
+      <div id="feedback" aria-live="polite">یکی از گزینه‌ها را انتخاب کن.</div>
+      <button id="next" class="next-btn" hidden>مرحله بعد ⟵</button>
+    </div>
+
+    <div class="progress-track">
+      <div id="progress"></div>
+    </div>
+    <p class="footnote">هر پاسخ درست، ۱۰ امتیاز ⭐</p>
+  </main>
+</div>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800;900&display=swap');
+
+#space-spelling {
+  --cyan:#55efff;
+  --purple:#a66bff;
+  font-family:'Vazirmatn',Tahoma,sans-serif;
+  color:#fff;
+  min-height:720px;
+  padding:22px 14px 30px;
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  border-radius:24px;
+  background:
+    radial-gradient(ellipse at 50% 35%,#252d70 0%,transparent 48%),
+    radial-gradient(ellipse at 15% 90%,#3c145e 0%,transparent 35%),
+    linear-gradient(145deg,#060a23,#11133d 55%,#090b20);
+}
+#space-spelling * {box-sizing:border-box}
+#space-spelling .stars {
+  position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    radial-gradient(2px 2px at 10% 18%,#fff 98%,transparent),
+    radial-gradient(2px 2px at 80% 13%,#baf8ff 98%,transparent),
+    radial-gradient(1px 1px at 30% 70%,#fff 98%,transparent),
+    radial-gradient(2px 2px at 92% 65%,#fff 98%,transparent),
+    radial-gradient(1px 1px at 65% 88%,#fff 98%,transparent),
+    radial-gradient(2px 2px at 18% 48%,#9b8cff 98%,transparent);
+  background-size:180px 160px;
+}
+#space-spelling .planet {
+  position:absolute;border-radius:50%;z-index:-1;pointer-events:none;
+  box-shadow:inset -15px -12px 25px #05071d99,0 0 35px #8055ff33;
+}
+#space-spelling .planet-one {
+  width:105px;height:105px;top:115px;right:-42px;
+  background:radial-gradient(circle at 30% 25%,#ffb4fc,#a24de8 45%,#452b91);
+}
+#space-spelling .planet-two {
+  width:65px;height:65px;bottom:60px;left:-20px;
+  background:radial-gradient(circle at 30% 25%,#9effff,#168ebd 50%,#172c7c);
+}
+#space-spelling .hud {
+  max-width:680px;margin:0 auto 25px;
+  display:flex;justify-content:space-between;gap:10px;
+}
+#space-spelling .hud-box {
+  background:linear-gradient(145deg,#22285b,#101432);
+  border:1px solid #7778ff88;border-radius:14px;
+  padding:10px 15px;box-shadow:0 5px 0 #080b24,0 0 18px #705bff22;
+  font-size:14px;
+}
+#space-spelling .game-panel {max-width:620px;margin:auto;text-align:center}
+#space-spelling .astronaut {
+  font-size:55px;filter:drop-shadow(0 0 16px #7ceeff88);
+  animation:floatAstronaut 3s ease-in-out infinite;
+}
+@keyframes floatAstronaut {
+  0%,100%{transform:translateY(0) rotate(-5deg)}
+  50%{transform:translateY(-9px) rotate(5deg)}
+}
+#space-spelling .eyebrow {
+  color:var(--cyan);letter-spacing:3px;font-size:11px;font-weight:800;
+  margin-top:5px;
+}
+#space-spelling h1 {
+  font-size:clamp(25px,5vw,38px);line-height:1.5;margin:5px 0;
+  font-weight:900;
+  text-shadow:0 3px 0 #49218d,0 0 25px #8c65ff77;
+}
+#space-spelling .subtitle {color:#c5d0ff;font-size:13px;margin:0 0 22px}
+#space-spelling .mission-card {
+  position:relative;
+  padding:24px 20px 20px;
+  border-radius:25px;
+  border:1px solid #9a91ff99;
+  background:linear-gradient(145deg,#252956ee,#121633f5);
+  box-shadow:0 10px 0 #07091e,0 20px 40px #0006,inset 0 1px 0 #ffffff22,0 0 35px #6655ff22;
+}
+#space-spelling .target-icon {
+  width:43px;height:43px;margin:-45px auto 12px;
+  display:grid;place-items:center;border-radius:50%;
+  color:#201347;font-size:24px;
+  background:linear-gradient(145deg,#fff8b0,#ffb938);
+  box-shadow:0 5px 0 #a85d1b,0 0 25px #ffc94b77;
+}
+#space-spelling #question {font-size:17px;font-weight:800;margin:8px 0 22px}
+#space-spelling .answers {
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px 12px;
+}
+#space-spelling .answer {
+  min-height:65px;padding:12px 7px;border-radius:50px;
+  border:2px solid #7b91ff;
+  color:#fff;font:800 17px 'Vazirmatn',Tahoma,sans-serif;
+  cursor:pointer;position:relative;
+  background:linear-gradient(180deg,#7b70ff 0%,#4c3bcb 48%,#30247d 100%);
+  box-shadow:0 7px 0 #201858,0 10px 18px #05071c77,inset 0 2px 2px #ffffff55;
+  text-shadow:0 1px 2px #17103e;
+  transition:transform .12s,filter .12s,box-shadow .12s;
+}
+#space-spelling .answer:nth-child(2),
+#space-spelling .answer:nth-child(3) {
+  background:linear-gradient(180deg,#43dff1,#1384c3 52%,#14508e);
+  border-color:#7af4ff;box-shadow:0 7px 0 #10365f,0 10px 18px #05071c77,inset 0 2px 2px #ffffff66;
+}
+#space-spelling .answer:hover:not(:disabled) {
+  transform:translateY(-3px);filter:brightness(1.15);
+}
+#space-spelling .answer:active:not(:disabled) {
+  transform:translateY(4px);box-shadow:0 2px 0 #201858;
+}
+#space-spelling .answer:disabled {cursor:default;opacity:1}
+#space-spelling .answer.correct {
+  background:linear-gradient(180deg,#91ffce,#13b97b 55%,#08704f);
+  border-color:#b9ffe1;box-shadow:0 7px 0 #075239,0 0 24px #26ffb066;
+}
+#space-spelling .answer.wrong {
+  background:linear-gradient(180deg,#ff9cae,#e34266 55%,#8f1e43);
+  border-color:#ffc2cf;box-shadow:0 7px 0 #67172f;
+}
+#space-spelling #feedback {min-height:35px;padding-top:17px;color:#c6d2ff;font-size:13px;font-weight:700}
+#space-spelling #feedback.good {color:#7cffc5}
+#space-spelling #feedback.bad {color:#ff9db4}
+#space-spelling .next-btn {
+  margin-top:8px;border:0;border-radius:14px;padding:12px 25px;
+  background:linear-gradient(180deg,#ffe58b,#ffac36);
+  color:#35204d;font:900 15px 'Vazirmatn',Tahoma,sans-serif;
+  box-shadow:0 5px 0 #a85c24;cursor:pointer;
+}
+#space-spelling .progress-track {
+  height:9px;max-width:500px;margin:26px auto 10px;
+  border-radius:20px;background:#080b20;border:1px solid #5f66b4;overflow:hidden;
+}
+#space-spelling #progress {
+  height:100%;width:0%;
+  background:linear-gradient(90deg,#a45cff,#56efff);
+  box-shadow:0 0 15px #5cefff;transition:width .3s;
+}
+#space-spelling .footnote {font-size:11px;color:#929ed8}
+#space-spelling .final-title {font-size:28px;color:#ffe58b}
+#space-spelling .final-score {font-size:42px;font-weight:900;color:#78f6ff}
+#space-spelling .restart-btn {
+  margin-top:15px;padding:12px 22px;border:1px solid #8cf7ff;
+  border-radius:14px;color:white;background:#243a77;
+  font:800 15px 'Vazirmatn',Tahoma,sans-serif;cursor:pointer;
+}
+@media(max-width:420px) {
+  #space-spelling {padding:16px 10px;min-height:680px}
+  #space-spelling .mission-card {padding:22px 12px 16px}
+  #space-spelling .answer {font-size:15px;min-height:60px}
+  #space-spelling .answers {gap:13px 9px}
+}
+</style>
+
+<script>
+(() => {
+  const root = document.getElementById('space-spelling');
+  if (!root || root.dataset.started) return;
+  root.dataset.started = '1';
+
+  const words = [
+    {word:'مخصوص', wrong:['مخسوس','مخصوس','مخسوص']},
+    {word:'جنب و جوش', wrong:['جنب و جوشّ','جنب‌وجوش','جنب و جوشس']},
+    {word:'فعالیت', wrong:['فعالییت','فغالیت','فعالیتت']},
+    {word:'موضوع', wrong:['موضوغ','موزوع','موضوئ']},
+    {word:'بحث', wrong:['بحس','بهث','بخث']},
+    {word:'مسابقات', wrong:['مصابقات','مسابقاط','مسابقاتت']},
+    {word:'خاطرات', wrong:['خاطرات','خاترات','خاطراط']},
+    {word:'جلب توجه', wrong:['جلب توجع','جلب توحه','جلب توجهه']},
+    {word:'گفت‌وگو', wrong:['گفت و گوو','گفط‌وگو','گفت‌وگوو']},
+    {word:'تصمیم', wrong:['تصمیم','تسمیم','تصمیمم']},
+    {word:'طرف', wrong:['ترف','ترَف','طرفف']},
+    {word:'تعطیلی', wrong:['تعتیلی','تعطیلیی','تعطلی']},
+    {word:'طول', wrong:['تول','طولل','تولل']},
+    {word:'صحبت', wrong:['سهبت','صحبد','سحبت']},
+    {word:'ماهر', wrong:['ماحر','مهر','ماهرر']},
+    {word:'حرفه‌ای', wrong:['حرفه ایی','حرف‌ای','حرفه‌ایی']},
+    {word:'چطور', wrong:['چطورر','چتور','جطور']},
+    {word:'همچنان', wrong:['همچنان','همچنانن','همچنانم']},
+    {word:'اصلی', wrong:['اصلیی','اسلی','اصلیه']},
+    {word:'نظم', wrong:['نزْم','نزم','نضم']},
+    {word:'انتخاب', wrong:['انتخواب','انتخابب','انتخاپ']},
+    {word:'خانواده', wrong:['خانوادهه','خانواذه','خانوا‌ده']}
+  ];
+
+  const $ = id => root.querySelector('#' + id);
+  const digits = n => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
+  let order = [], index = 0, score = 0, locked = false;
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function start() {
+    order = shuffle(words);
+    index = 0;
+    score = 0;
+    $('score').textContent = digits(score);
+    $('next').hidden = true;
+    $('question').textContent = 'کدام گزینه درست نوشته شده است؟';
+    $('question').style.display = '';
+    $('answers').style.display = '';
+    render();
+  }
+
+  function render() {
+    locked = false;
+    $('level').textContent = digits(index + 1);
+    $('score').textContent = digits(score);
+    $('progress').style.width = (index / words.length * 100) + '%';
+    $('feedback').className = '';
+    $('feedback').textContent = 'یکی از گزینه‌ها را انتخاب کن.';
+    $('next').hidden = true;
+    $('question').textContent = 'کدام گزینه درست نوشته شده است؟';
+    const item = order[index];
+    const options = shuffle([item.word, ...item.wrong]);
+    const answers = $('answers');
+    answers.innerHTML = '';
+    options.forEach(option => {
+      const btn = document.createElement('button');
+      btn.className = 'answer';
+      btn.textContent = option;
+      btn.type = 'button';
+      btn.addEventListener('click', () => choose(btn, option, item.word));
+      answers.appendChild(btn);
+    });
+  }
+
+  function choose(btn, answer, correct) {
+    if (locked) return;
+    locked = true;
+    const buttons = [...$('answers').querySelectorAll('button')];
+    buttons.forEach(b => {
+      b.disabled = true;
+      if (b.textContent === correct) b.classList.add('correct');
+    });
+    if (answer === correct) {
+      score += 10;
+      $('score').textContent = digits(score);
+      $('feedback').textContent = 'آفرین! پاسخ درست بود. ⭐ +۱۰ امتیاز';
+      $('feedback').className = 'good';
+    } else {
+      btn.classList.add('wrong');
+      $('feedback').textContent = 'این یکی درست نبود؛ گزینه سبز پاسخ درست است.';
+      $('feedback').className = 'bad';
+    }
+    $('progress').style.width = ((index + 1) / words.length * 100) + '%';
+    $('next').hidden = false;
+    $('next').textContent = index === words.length - 1 ? 'دیدن نتیجه 🏆' : 'مرحله بعد ⟵';
+  }
+
+  function finish() {
+    $('level').textContent = '۲۲';
+    $('progress').style.width = '100%';
+    $('question').innerHTML = '<div class="final-title">مأموریت تمام شد! 🚀</div><div class="final-score">' + digits(score) + ' از ۲۲۰</div><p>تو یک شکارچی املای درست هستی!</p>';
+    $('answers').style.display = 'none';
+    $('feedback').textContent = score === 220 ? 'همه پاسخ‌ها درست بود؛ عالی!' : 'یک بار دیگر بازی کن و رکوردت را بهتر کن.';
+    $('feedback').className = 'good';
+    $('next').textContent = 'شروع دوباره ↻';
+    $('next').hidden = false;
+    $('next').onclick = start;
+  }
+
+  $('next').addEventListener('click', () => {
+    if (index === words.length - 1) {
+      finish();
+      return;
+    }
+    index++;
+    render();
+  });
+
+  start();
+})();
+</script>
